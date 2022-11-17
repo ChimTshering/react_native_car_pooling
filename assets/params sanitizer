@@ -1,0 +1,107 @@
+module ParamsSanitizer
+  def vacancy_params
+    params.require(:vacancy).permit(
+      :title,
+      :employment_type,
+      :department,
+      :no_of_openings,
+      :description,
+      :currency,
+      :min_salary,
+      :max_salary,
+      :status,
+      :location,
+      :deadline,
+    )
+  end
+
+  def apply_params
+    params.require(:applicant).permit(
+      :first_name,
+      :last_name,
+      :email_address,
+      :phone_number,
+      :date_of_birth,
+      :resume,
+      education_qualifications_attributes: [:id,
+                                             :field_of_study,
+                                             :degree,
+                                             :institute,
+                                             :start_date,
+                                             :end_date,
+                                             :_destroy],
+      experiences_attributes: [:id,
+                                :title,
+                                :employment_type,
+                                :company_name,
+                                :location,
+                                :start_date,
+                                :end_date,
+                                :_destroy],
+    )
+  end
+
+  def team_params
+    params.require(:team).permit(
+      :team_name, :description, team_member_attributes: %i(id user_id _destroy)
+    )
+  end
+
+  def vacancy_filter_params
+    params.require(:vacancy).permit(
+      :title,
+      :no_of_openings,
+      :description,
+      :currency,
+      :min_salary,
+      :max_salary,
+      :location,
+      :deadline,
+      postion: [],
+      status: [],
+      department: [],
+      employment_type: [],
+    )
+  end
+
+  def assignment_params
+    params.require(:assignment).permit(
+      :title,
+      :assignment_type,
+      :description,
+      :status,
+      :deadline,
+      :assignment_link,
+    )
+  end
+
+  def submission_params
+    params.require(:submission).permit(
+      :vacancy_id,
+      :applicant_id,
+      :assignment_id,
+      :assignment_description,
+      :assignment_link,
+    )
+  end
+
+  def interview_params
+    params.require(:interview).permit(
+      :title,
+      :interview_type,
+      :schedule,
+      :meet_link,
+      :status,
+      :start_time,
+      :end_time,
+      :instructions,
+    )
+  end
+
+  def note_params
+    params.require(:note).permit(
+      :body,
+    )
+  end
+end
+
