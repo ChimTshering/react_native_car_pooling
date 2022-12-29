@@ -1,0 +1,51 @@
+import { registerUser } from './model';
+export const RegisteredUsers: registerUser[] = [
+  {
+    user_name: "tashi",
+    email: "tashi@gmail.com",
+    phone_number: 17234567,
+    password: "tashi",
+    confirm_password: "tashi",
+  },
+  {
+    user_name: "admin",
+    email: "admin@gmail.com",
+    phone_number: 12345678,
+    password: "admin",
+    confirm_password: "admin",
+  },
+];
+export const RegisteredRide = [
+  {
+    driver_name: "tashi",
+    driver_email: "tashi@gmail.com",
+    phone_number: '17234567',
+    lisence_number: "t-12345",
+    destination_dzo: "Chhukha",
+    destination_gewog: "Bongo",
+    departure_dzo: "Chhukha",
+    departure_gewog: "Chapcha",
+    vechile_name: "van",
+    vechile_number: "bp-2-A1234",
+    available_seat: 2,
+    show_route: false,
+    start: { name: "Bongo", latitude: 26.920278, longitude: 89.621944 },
+    destination: { name: "Chapcha", latitude: 27.193333, longitude: 89.537778 },
+  },
+  {
+    driver_name: "tashi",
+    driver_email: "dakps@gmail.com",
+    phone_number: '17234567',
+    lisence_number: "t-12345",
+    destination_dzo: "Haa",
+    destination_gewog: "Katsho",
+    departure_dzo: "Haa",
+    departure_gewog: "Gakiling",
+    vechile_name: "van",
+    vechile_number: "bp-2-A1234",
+    available_seat: 2,
+    show_route: false,
+    start: { name: "Gakiling", latitude: 27.141667, longitude: 89.236389 },
+    destination: { name: "Katsho", latitude: 27.400833, longitude: 89.288333 },
+  },
+];

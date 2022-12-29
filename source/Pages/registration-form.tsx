@@ -10,19 +10,29 @@ import { CommonStyle } from "../styles/common.style";
 import { Field, Form as FinalForm } from "react-final-form";
 import { Link } from "@react-navigation/native";
 import { Error } from "../Components/Field-error";
+import { registerUser } from "../models/model";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import { RegisterUser } from "../features/driver-vechile-slice";
+import { useToast } from "react-native-toast-notifications";
+import { SuccessDialog } from "../Components/registration-success-model";
 
-export const RegistrationForm = ({navigation}:any) => {
+export const RegistrationForm = ({ navigation }: any) => {
   const [isSecure, setIsSecure] = useState(true);
   const [isPassSecure, setIsPassSecure] = useState(true);
-  const submit = (values: Record<string, any>) => {
-    console.log(values);
-    navigation.navigate("log_in");
+  const toast = useToast();
+  const dispatch = useDispatch<AppDispatch>();
+  const submit = (values: registerUser) => {
+    if (values.password === values.confirm_password) {
+      dispatch(RegisterUser(values));
+      navigation.navigate("log_in");
+    } else toast.show("Password miss-match");
   };
   return (
     <View style={{ justifyContent: "center" }}>
       <ScrollView>
         <FinalForm
-          onSubmit={(value) => submit(value)}
+          onSubmit={(value) => submit(value as registerUser)}
           render={({ handleSubmit }) => {
             return (
               <View style={CommonStyle.forms}>
@@ -103,7 +113,7 @@ export const RegistrationForm = ({navigation}:any) => {
                         outlineColor="#242A66"
                         right={
                           <TextInput.Icon
-                            icon={`${ isSecure ? "eye-off" : "eye"}`}
+                            icon={`${isSecure ? "eye-off" : "eye"}`}
                             onPress={() =>
                               isSecure ? setIsSecure(false) : setIsSecure(true)
                             }
@@ -130,7 +140,9 @@ export const RegistrationForm = ({navigation}:any) => {
                           <TextInput.Icon
                             icon={`${isPassSecure ? "eye-off" : "eye"}`}
                             onPress={() =>
-                              isPassSecure ? setIsPassSecure(false) : setIsPassSecure(true)
+                              isPassSecure
+                                ? setIsPassSecure(false)
+                                : setIsPassSecure(true)
                             }
                           />
                         }

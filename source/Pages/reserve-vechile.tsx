@@ -3,6 +3,8 @@ import { useCallback, useMemo, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { ScrollView, Text, View } from "react-native";
 import { Button, List } from "react-native-paper";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 import { FActionButton } from "../Components/fab";
 import { dzongkhag } from "../models/place.constant";
 import { CommonStyle } from "../styles/common.style";
@@ -11,6 +13,7 @@ import { HomeStyles } from "../styles/home.style";
 export const ReserveVechile = ({ navigation }: any) => {
   const [dzo, setDzo] = useState("");
   const [gewog, setGewog] = useState("");
+  const hasLoggedIn = useSelector((state:RootState)=>state.vechile.isLoggedIn)
   const dzongkhags = useMemo(() => {
     return dzongkhag.map((bhutan) => bhutan.name);
   }, []);
@@ -231,7 +234,7 @@ export const ReserveVechile = ({ navigation }: any) => {
           </ScrollView>
         </View>
       </View>
-      <FActionButton />
+      {hasLoggedIn?<FActionButton />:null}
     </>
   );
 };

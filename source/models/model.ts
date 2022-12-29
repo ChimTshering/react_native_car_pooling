@@ -36,3 +36,20 @@ export type Start = {
   latitude:number
   longitude:number
 }
+export type LoggedInCred = {
+  user_name:string,
+  password:string
+}
+export type registerUser = {
+  user_name:string,
+  email:string,
+  phone_number:number
+  password:string,
+  confirm_password?:string,
+};
+export type SuccessModal = {
+  title:string;
+  body:string;
+  showModel:boolean
+  setShowModel:(show:boolean)=>void
+};

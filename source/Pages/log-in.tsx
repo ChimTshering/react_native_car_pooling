@@ -2,23 +2,36 @@ import { useState } from "react";
 import { Field, Form } from "react-final-form";
 import { Text, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
+import { useToast } from "react-native-toast-notifications";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../app/store";
 import { Error } from "../Components/Field-error";
+import { LogUserIn } from "../features/driver-vechile-slice";
+import { LoggedInCred } from "../models/model";
+import { RegisteredUsers } from "../models/registeredUsers.constent";
 import { CommonStyle } from "../styles/common.style";
 
-export const LogIn = ({navigation}:any) => {
-  const [isSecure, setIsSecure]= useState(true);
-  const signIn = (values: Record<string, any>) => {
-    console.log(values);
-    navigation.navigate("reserve_vechile");
+export const LogIn = ({ navigation }: any) => {
+  const [isSecure, setIsSecure] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.vechile.isLoggedIn
+  );
+  const toast = useToast();
+  const signIn = (values: LoggedInCred) => {
+    RegisteredUsers.forEach((user) => {
+      dispatch(LogUserIn(values));
+      if (isLoggedIn) {
+        navigation.navigate("reserve_vechile");
+      }
+    });
   };
   return (
     <Form
-      onSubmit={(values)=>signIn(values)}
-      
-      render={({handleSubmit,values}) => {
+      onSubmit={(values) => signIn(values as LoggedInCred)}
+      render={({ handleSubmit, values }) => {
         return (
-          <View style = {{justifyContent:'center', height:'90%'
-          }}>
+          <View style={{ justifyContent: "center", height: "90%" }}>
             <View style={CommonStyle.forms}>
               <Field
                 name="user_name"

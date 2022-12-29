@@ -9,13 +9,16 @@ import { CommonStyle } from "../styles/common.style";
 import { LogIn } from "../Pages/log-in";
 import { ReserveVechile } from "../Pages/reserve-vechile";
 import { RideDetail } from "../Pages/RideDetail";
-import { Title } from "react-native-paper";
+import { Avatar, Title } from "react-native-paper";
 import { AddVechile } from "../Pages/add-vechile";
 import { Maps } from "../Pages/maps";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Stack = createNativeStackNavigator();
 
 export const AppRoutes = ({ navigation }: any) => {
+  const hasLoggedIn = useSelector((state:RootState)=>state.vechile.isLoggedIn)
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -53,6 +56,9 @@ export const AppRoutes = ({ navigation }: any) => {
             title: "Search Your Ride!",
             headerTitleStyle: { color: "#333333" },
             headerRight: () => {
+              if(hasLoggedIn){
+                return(<Link to={{screen:'profile'}}><Avatar.Image size={48} source={require('../../assets/pub_profile.jpg')}/></Link>);
+              }else{
               return (
                 <Link
                   to={{ screen: "log_in" }}
@@ -75,7 +81,7 @@ export const AppRoutes = ({ navigation }: any) => {
                     Log In
                   </Text>
                 </Link>
-              );
+              );}
             },
           }}
         />
